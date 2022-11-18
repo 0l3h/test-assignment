@@ -4,7 +4,8 @@
     "password": "dL8_b*",
     "database": "userlist_development",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": false
   },
   "test": {
     "username": "postgres",
