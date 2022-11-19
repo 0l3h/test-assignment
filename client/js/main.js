@@ -1,6 +1,12 @@
 'use strict'
 
-import { createUserRequest, getAllUsersRequest, updateUserRequest, deleteUserRequest } from '../api/user.js';
+import { 
+    createUserRequest, 
+    getAllUsersRequest, 
+    updateUsernameRequest,
+    changeRankRequest,
+    deleteUserRequest 
+} from '../api/user.js';
 
 getUsers();
 
@@ -9,9 +15,11 @@ async function addUser(e) {
 
     const usernameInput = form.elements[0];
     const username = usernameInput.value;
-    const user = {order: (Math.random() * 1000).toFixed(0), username};
+    const user = {rank: (Math.random() * 1000).toFixed(0), username};
 
-    createUserRequest(user);
+    await createUserRequest(user);
+
+    document.location.reload();
 };
 
 async function getUsers() {
@@ -22,48 +30,66 @@ async function getUsers() {
 
     for (const user of users) {
         const listElement = document.createElement('li');
-        const order = document.createElement('span');
+        const rankElement = document.createElement('span');
+        const inputElement = document.createElement('input');
+        const formElement = document.createElement('form');
         const deleteButton = document.createElement('button');
         const editButton = document.createElement('button');
+        const rankDownButton = document.createElement('button');
+        const rankUpButton = document.createElement('button');
         const usernameElement = document.createElement('span');
 
-        order.textContent = user.order;
+        rankElement.textContent = user.rank;
         usernameElement.textContent = user.name;
         editButton.textContent = 'Edit';
         deleteButton.textContent = 'Delete';
+        rankUpButton.textContent = 'Rank up';
+        rankDownButton.textContent = 'Rank down';
 
-        deleteButton.addEventListener('click', deleteUser);
-        editButton.addEventListener('click', updateUser);
+        deleteButton.addEventListener('click', () => deleteUser(user.id));
+        editButton.addEventListener('click', () => updateUsername({ id: user.id}));
+        rankUpButton.addEventListener('click', () => changeRank({ id: user.id, rankBy: 1 }));
+        rankDownButton.addEventListener('click', () => changeRank({ id: user.id, rankBy: -1 }));
 
         listElement.setAttribute('data-user-id', user.id);
         
-        listElement.appendChild(order);
+        
+        listElement.appendChild(rankElement);
         listElement.appendChild(usernameElement);
+        formElement.appendChild(inputElement);
+        listElement.appendChild(formElement);
         listElement.appendChild(editButton);
         listElement.appendChild(deleteButton);
+        listElement.appendChild(rankUpButton);
+        listElement.appendChild(rankDownButton);
 
         orderedList.appendChild(listElement);
     };
 };
 
-async function updateUser(e) {
-    const listElement = e.target.parentElement;
-    const userId = listElement.getAttribute('data-user-id');
-    const inputElement = document.querySelector(`li[data-user-id=${userId}]`);
+async function updateUsername({ id, rankBy }) {
+    const editForm = document.querySelector(`li[data-user-id="${id}"] > form`);
 
-    console.log(inputElement.value);
+    const usernameInput = editForm.elements[0];
+    const name = usernameInput.value;
 
-    updateUserRequest(userId);
+    await updateUsernameRequest({ id, name });
+
+    document.location.reload();
 };
 
-async function deleteUser(e) {
-    const listElement = e.target.parentElement;
-    const userId = listElement.getAttribute('data-user-id');
+async function changeRank({ id, name, rankBy }) {
+    await changeRankRequest({ id, rankBy, name });
 
-    deleteUserRequest(userId).then(getUsers);
+    document.location.reload();
 };
 
-const form = document.querySelector('form');
+async function deleteUser(userId) {
+    await deleteUserRequest(userId);              
+    
+    document.location.reload();
+};
+
+const form = document.querySelector('main > form');
 
 form.addEventListener('submit', addUser);
-form.addEventListener('submit', getUsers);
