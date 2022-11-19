@@ -10,9 +10,8 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true
       },
-      order: {
+      rank: {
         type: Sequelize.INTEGER,
-        unique: true,
         allowNull: false
       },
       name: {
