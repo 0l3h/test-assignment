@@ -4,31 +4,61 @@ module.exports.getAllUsers = async (req, res) => {
     try {
         const users = await user.findAll({
             raw: true,
-            order: ['order']
+            order: ['rank']
         });
 
         res.send(JSON.stringify(users));
     } catch (error) {
         console.log(error.message);
-        res.end();
     }
+
+    res.end();
 };
 
 module.exports.createUser = async (req, res) => {
-    const { order, username: name } = req.body;
-    console.log(req.body);
-    try {
-        await user.create({ order, name });
+    const { rank, username: name } = req.body;
 
-        res.end();
+    try {
+        await user.create({ rank, name });
     } catch (error) {
         console.log(error.message);
-        res.end();
     }
+
+    res.end();
 };
 
-module.exports.updateUser = async (req, res) => {
+module.exports.updateUsername = async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
 
+    try {
+        const foundUser = await user.findOne({ 
+            where: { id } 
+        });
+        
+        foundUser.update({ name });
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    res.end();
+};
+
+module.exports.changeRank = async (req, res) => {
+    const { rankBy } = req.body;
+    const { id } = req.params;
+
+    try {
+        const foundUser = await user.findOne({ 
+            where: { id } 
+        });
+        
+        rankBy && foundUser.increment('rank', { by: rankBy });
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    res.end();
 };
 
 module.exports.deleteUser = async (req, res) => {
@@ -36,13 +66,9 @@ module.exports.deleteUser = async (req, res) => {
 
     try {
         await user.destroy({ where: { id } });
-
-        res.end();
     } catch (error) {
-        console.log(error.message);
-        
-        res.end();
+        console.log(error.message);        
     }
 
-    console.log(id);
+    res.end();
 };
