@@ -8,8 +8,6 @@ const getAllUsersRequest = () => {
 };
 
 const createUserRequest = (data) => {
-    console.log(data);
-
     return fetch('/create-user', {
         method: 'POST',
         headers: {
@@ -19,9 +17,22 @@ const createUserRequest = (data) => {
     });
 };
 
-const updateUserRequest = (data) => {
-    return fetch(`/update-user/${data.userId}`, {
+const updateUsernameRequest = (data) => {
+    return fetch(`/update-username/${data.id}`, {
         method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+};
+
+const changeRankRequest = (data) => {
+    return fetch(`/change-rank/${data.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
     });
 };
@@ -32,4 +43,10 @@ const deleteUserRequest = (userId) => {
     });
 };
 
-export { getAllUsersRequest, createUserRequest, updateUserRequest, deleteUserRequest };
+export { 
+    getAllUsersRequest, 
+    createUserRequest, 
+    updateUsernameRequest, 
+    changeRankRequest,
+    deleteUserRequest 
+};
