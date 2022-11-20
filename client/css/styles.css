@@ -1,0 +1,63 @@
+h1 {
+    text-align: center;
+}
+
+main {
+    margin: auto;
+    max-width: 50vw;
+}
+
+button:not(form > button) {
+    background: none;
+    border: none;
+}
+
+button:not(form > button):hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+main > form {
+    margin-bottom: 40px;
+    padding: 20px;
+    /* box-shadow: 0 4px 8px rgba(0, 204, 255, 0.296); */
+    /* background-color: rgb(241, 250, 255); */
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+ol {
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+    list-style: none;
+    display: flex;
+    padding: 20px 0;
+    align-items: center;
+    gap: 10px;
+}
+
+li:not(:last-child) {
+    border-bottom: 1px solid rgb(206, 206, 206);
+}
+
+li > * {
+    flex: 1;
+}
+
+li > span {
+    display: inline-block;
+}
+
+li > span:first-child {
+    text-align: center;
+    margin-right: 20px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+li > span:nth-child(2) {
+    margin-right: 20px;
+}
