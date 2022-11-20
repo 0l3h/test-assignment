@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 
 app.disable('x-powered-by');
 
-app.use(express.static(path.resolve(__dirname + '/../client/')));
+app.use(express.static(path.resolve(__dirname + '/../../client/')));
 app.use(express.json());
 
 app.get('/get-users', getAllUsers);

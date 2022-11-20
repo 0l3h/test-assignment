@@ -1,5 +1,3 @@
-'use strict'
-
 import { 
     createUserRequest, 
     getAllUsersRequest, 
@@ -47,12 +45,12 @@ async function getUsers() {
         rankDownButton.textContent = 'Rank down';
 
         deleteButton.addEventListener('click', () => deleteUser(user.id));
-        editButton.addEventListener('click', () => updateUsername({ id: user.id}));
+        editButton.addEventListener('click', () => updateUsername(user.id));
         rankUpButton.addEventListener('click', () => changeRank({ id: user.id, rankBy: 1 }));
         rankDownButton.addEventListener('click', () => changeRank({ id: user.id, rankBy: -1 }));
 
+        inputElement.placeholder = 'New username'
         listElement.setAttribute('data-user-id', user.id);
-        
         
         listElement.appendChild(rankElement);
         listElement.appendChild(usernameElement);
@@ -67,7 +65,7 @@ async function getUsers() {
     };
 };
 
-async function updateUsername({ id, rankBy }) {
+async function updateUsername(id) {
     const editForm = document.querySelector(`li[data-user-id="${id}"] > form`);
 
     const usernameInput = editForm.elements[0];
