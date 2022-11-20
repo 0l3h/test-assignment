@@ -1,4 +1,4 @@
-const { user, sequelize } = require("../models");
+const { user } = require("../models");
 
 module.exports.getAllUsers = async (req, res) => {
     try {
