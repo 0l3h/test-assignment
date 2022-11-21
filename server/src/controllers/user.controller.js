@@ -53,7 +53,7 @@ module.exports.changeRank = async (req, res) => {
             where: { id } 
         });
         
-        rankBy && foundUser.increment('rank', { by: rankBy });
+        foundUser.increment('rank', { by: rankBy });
     } catch (error) {
         console.log(error.message);
     }
