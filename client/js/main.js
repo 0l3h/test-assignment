@@ -76,8 +76,8 @@ async function updateUsername(id) {
     document.location.reload();
 };
 
-async function changeRank({ id, name, rankBy }) {
-    await changeRankRequest({ id, rankBy, name });
+async function changeRank({ id, rankBy }) {
+    await changeRankRequest({ id, rankBy });
 
     document.location.reload();
 };
